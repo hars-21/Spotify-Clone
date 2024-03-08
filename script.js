@@ -81,7 +81,7 @@ let songs = [
   {
     songName: "Best of Honey Si...",
     songAbout: "This is Honey Singh",
-    filePath: "/songs/Brown Rang.mp3",
+    filePath: "/songs/Habibti.mp3",
     coverPath: "images/card11.jpeg",
   },
   {
@@ -108,6 +108,18 @@ function songUpdate() {
   masterPlay.src = "/images/pause_icon.png";
 }
 
+function changeToPause() {
+  let cardLoad = document.getElementById(songIndex);
+  cardLoad.src = "/images/pause_icon.png";
+  cardLoad.classList.add("show");
+}
+
+function changeToPlay() {
+  let cardLoad = document.getElementById(songIndex);
+  cardLoad.src = "/images/play_icon.png";
+  cardLoad.classList.remove("show");
+}
+
 // Accessing song name and info
 songItem.forEach((element, i) => {
   element.getElementsByClassName("card-img")[0].src = songs[i].coverPath;
@@ -120,15 +132,11 @@ masterPlay.addEventListener("click", () => {
   if (audioelement.paused || audioelement.currentTime <= 0) {
     audioelement.play();
     masterPlay.src = "/images/pause_icon.png";
-    let cardLoad = document.getElementById(musicIndex);
-    cardLoad.src = "/images/pause_icon.png";
-    cardLoad.classList.add("show");
+    changeToPause();
   } else {
     audioelement.pause();
     masterPlay.src = "/images/play_icon.png";
-    let cardLoad = document.getElementById(musicIndex);
-    cardLoad.src = "/images/play_icon.png";
-    cardLoad.classList.remove("show");
+    changeToPlay();
   }
 });
 
@@ -196,6 +204,8 @@ document.getElementById("next").addEventListener("click", () => {
     songIndex += 1;
   }
   songUpdate();
+  makeAllPlays();
+  changeToPause();
 });
 
 // Play Previous
@@ -206,6 +216,8 @@ document.getElementById("previous").addEventListener("click", () => {
     songIndex -= 1;
   }
   songUpdate();
+  makeAllPlays();
+  changeToPause();
 });
 
 // Play next after ending
@@ -216,6 +228,8 @@ audioelement.addEventListener("ended", () => {
     songIndex += 1;
   }
   songUpdate();
+  makeAllPlays();
+  changeToPause();
 });
 
 // Shuffle - Random Play
@@ -223,6 +237,8 @@ shuffle.addEventListener("click", () => {
   random = Math.floor(Math.random() * 13);
   songIndex = random;
   songUpdate();
+  makeAllPlays();
+  changeToPause();
 });
 
 // Like the song
